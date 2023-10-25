@@ -13,8 +13,8 @@ void main(){
 	int nthreads;
 	clock_t start_time, end_time;
 
-	rows = 30000;
-	columns = 30000; 
+	rows = 10000;
+	columns = 10000; 
 
 	result = (double *)malloc((sizeof(double) * columns));
 	vector = (double *)malloc((sizeof(double) * rows));

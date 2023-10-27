@@ -1,8 +1,7 @@
 #include <omp.h>
 #include <stdio.h>
 
-void main(){
-	
+int main(){	
 	int nthreads;
 
 	for (int i = 0; i < 4; i++) {
@@ -14,4 +13,5 @@ void main(){
 			}
 		}
 	}
+	return 0;
 }

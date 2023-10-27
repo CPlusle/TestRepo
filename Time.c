@@ -13,8 +13,10 @@ void main(){
 	int nthreads;
 	clock_t start_time, end_time;
 
-	rows = 10000;
-	columns = 10000; 
+	int clock_divider = 1000;
+
+	rows = 20000;
+	columns = 20000; 
 
 	result = (double *)malloc((sizeof(double) * columns));
 	vector = (double *)malloc((sizeof(double) * rows));
@@ -44,7 +46,7 @@ void main(){
 	end_time = clock();
 
 	time = (end_time-start_time);
-	printf("Time: %f \n", time);
+	printf("Time: %f \n", time / clock_divider);
 
 	printf("Result: %f \n \n", result[1]);
 	
@@ -65,7 +67,7 @@ void main(){
 	end_time = clock();
 
 	time = (end_time-start_time);
-	printf("Time: %f \n", time);
+	printf("Time: %f \n", time / clock_divider);
 
 	printf("Result: %f \n \n", result[1]);
 
@@ -78,17 +80,19 @@ void main(){
 	start_time = clock();
 	printf("//  OpenMP  //\n");
 
-	for(int i=0; i<rows; i++){
-		#pragma omp parallel for num_threads(4)
+	#pragma omp parallel 
 		for(int j=0; j<columns; j++){
-			nthreads = omp_get_thread_num();
-			result[j] += matrix[j][i] * vector[i];
+			#pragma omp parallel for num_threads(4)
+				for(int i=0; i<rows; i++){
+					nthreads = omp_get_thread_num();
+					result[j] += matrix[j][i] * vector[i];
+				}
 		}
-	}
+	
 	end_time = clock();
 
 	time = (end_time-start_time);
-	printf("Time: %f \n", time);
+	printf("Time: %f \n", time / clock_divider);
 
 	printf("Result: %f \n", result[1]);
 }
